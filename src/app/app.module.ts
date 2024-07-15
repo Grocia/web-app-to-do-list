@@ -20,6 +20,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AboutComponent } from './about/about.component';
 import { about } from './about/about.module';
 import {MatListModule} from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import {MatListModule} from '@angular/material/list';
     MatSnackBarModule,
     MatButtonModule,
     MatDialogModule,
-    MatListModule
+    MatListModule,
+    MatTooltipModule
   ],
   providers: [
     provideAnimations()

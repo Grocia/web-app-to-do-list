@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/shared/service/auth.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskEditDialogComponent } from '../task-edit-dialog/task-edit-dialog.component';
+import { SnackbarService } from 'src/app/shared/service/snackbar.service';
 
 
 @Component({
@@ -20,22 +21,20 @@ export class TaskListTableComponent implements OnInit{
   taskForm = new FormGroup({
     taskTitle: new FormControl('')
   });
-  readonly animal = signal('');
-  //readonly name = model('');
   readonly dialog = inject(MatDialog);
   
   constructor(
     private _placeholderDataService: PlaceholderDataService,
     private _authService: AuthService,
-    private _router: Router
+    private _router: Router,
+    private _snackbarService: SnackbarService
   ) {
     if(!this._authService.getUserData().id){
       this._router.navigate(['login'])
     }
-   }
+  }
 
   ngOnInit(): void {
-
     this.loadTasks();
   }
 
@@ -44,6 +43,12 @@ export class TaskListTableComponent implements OnInit{
       this.toDoListDataSource.data = data;
     });
   }
+
+  refreshTaskList(): void{
+    const aux = this.toDoListDataSource.data;
+    this.toDoListDataSource.data = [];
+    this.toDoListDataSource.data = aux;
+  };
 
   deleteTask(id: number): void{
     this._placeholderDataService.deleteToDo(id).subscribe((_) => {
@@ -66,17 +71,13 @@ export class TaskListTableComponent implements OnInit{
             title: taskTitle,
             completed: false
           });
+          this.taskForm.controls['taskTitle'].setValue('');
+          this._snackbarService.openSuccessSnackBar('Task created at the end of the list');
           this.refreshTaskList();
         }
       });
     }
   }
-
-  refreshTaskList(): void{
-    const aux = this.toDoListDataSource.data;
-    this.toDoListDataSource.data = [];
-    this.toDoListDataSource.data = aux;
-  };
 
   openTaskEditDialog(completed: boolean, id : number, title: string): void {
     const dialogRef = this.dialog.open(TaskEditDialogComponent, {
@@ -98,6 +99,17 @@ export class TaskListTableComponent implements OnInit{
         this.refreshTaskList();
       }
     });
+  }
+
+  onCompleteCheck(taskId: number){
+    const foundTask =  this.toDoListDataSource.data.find((task) => task.id === taskId);
+    if(foundTask){
+      foundTask.completed = !foundTask.completed;
+      this.toDoListDataSource.data = this.toDoListDataSource.data.filter(task => task.id != foundTask.id);
+      this.toDoListDataSource.data.push(foundTask);
+      this.toDoListDataSource.data.sort((a, b) => a.id - b.id)
+      this.refreshTaskList();
+    }
   }
 
 }

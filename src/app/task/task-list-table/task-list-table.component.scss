@@ -1,3 +1,13 @@
-// table {
-//     width: 100%;
-//   }
+.task-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+    gap: 10px 40px;
+}
+
+.task-form-text {
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    color: #000000DE;
+}
