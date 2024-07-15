@@ -10,13 +10,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { FormControl, FormGroup } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
 import { task } from './task/task';
+import { user } from './user/user.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    task
+    task,
+    user
   ],
   imports: [
     BrowserModule,
@@ -29,8 +33,9 @@ import { task } from './task/task';
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
-    // FormControl,
-    // FormGroup
+    MatCardModule,
+    MatSnackBarModule,
+    MatButtonModule
   ],
   providers: [
     provideAnimations()

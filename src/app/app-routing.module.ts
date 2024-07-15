@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TaskListTableComponent } from './task/task-list-table/task-list-table.component';
+import { LoginComponent } from './user/login/login.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'new-home', pathMatch: 'full' }, // Cambiar 'new-home' por la ruta deseada
-  { path: 'new-home', component: TaskListTableComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'task-list', component: TaskListTableComponent },
 ];
 
 @NgModule({
