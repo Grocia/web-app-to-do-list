@@ -16,6 +16,10 @@ export class PlaceholderDataService {
     return this.http.get<ToDoDtoResponse[]>(this.apiUrl);
   }
 
+  getAllToDosByUser(userId: number): Observable<ToDoDtoResponse[]> {
+    return this.http.get<ToDoDtoResponse[]>(`${this.apiUrl}?userId=${userId}`);
+  }
+
   getToDoById(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
   }
@@ -29,7 +33,6 @@ export class PlaceholderDataService {
   }
 
   deleteToDo(id: number): Observable<any> {
-    console.log("url: ",`${this.apiUrl}/${id}`);
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 

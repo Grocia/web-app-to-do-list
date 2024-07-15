@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { UserData } from '../shared/model/user-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class UserPlaceholderService {
 
   constructor(private http: HttpClient) { }
 
-  getUserByEmail(email: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}?email=${email}`);
+  getUserByEmail(email: string): Observable<UserData[]> {
+    return this.http.get<UserData[]>(`${this.apiUrl}?email=${email}`);
   }
 }
