@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Task editing</h2>
+<mat-dialog-content>
+  <p>Write new title:</p>
+  <mat-form-field class="example-form-field">
+    <input matInput type="text" [(ngModel)]="data.taskTitle">
+      <button matSuffix mat-icon-button aria-label="Clear" (click)="data.taskTitle=''">
+        <mat-icon>close</mat-icon>
+      </button>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button cdkFocusInitial (click)="saveEditedTask()">Save</button>
+</mat-dialog-actions>

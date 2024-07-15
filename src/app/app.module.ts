@@ -13,14 +13,18 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
-import { task } from './task/task';
 import { user } from './user/user.module';
+import { task } from './task/task.module';
+import { TaskEditDialogComponent } from './task/task-edit-dialog/task-edit-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     task,
-    user
+    user,
+    TaskEditDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +39,8 @@ import { user } from './user/user.module';
     ReactiveFormsModule,
     MatCardModule,
     MatSnackBarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule 
   ],
   providers: [
     provideAnimations()

@@ -1,5 +1,5 @@
 
-export class ToDoDtoResponse{
+export class ToDo{
   userId!: number;
   id!: number;
   title!: string;

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ToDoDtoResponse } from './model/to-do-response.model';
+import { ToDo } from './model/to-do.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +12,12 @@ export class PlaceholderDataService {
   constructor(private http: HttpClient) { }
 
   
-  getAllToDos(): Observable<ToDoDtoResponse[]> {
-    return this.http.get<ToDoDtoResponse[]>(this.apiUrl);
+  getAllToDos(): Observable<ToDo[]> {
+    return this.http.get<ToDo[]>(this.apiUrl);
   }
 
-  getAllToDosByUser(userId: number): Observable<ToDoDtoResponse[]> {
-    return this.http.get<ToDoDtoResponse[]>(`${this.apiUrl}?userId=${userId}`);
+  getAllToDosByUser(userId: number): Observable<ToDo[]> {
+    return this.http.get<ToDo[]>(`${this.apiUrl}?userId=${userId}`);
   }
 
   getToDoById(id: number): Observable<any> {
@@ -28,8 +28,8 @@ export class PlaceholderDataService {
     return this.http.post(this.apiUrl, taskData);
   }
 
-  updateToDo(id: number, postData: { title: string; body: string; userId: number }): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, postData);
+  updateToDo(postData: ToDo): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${postData.id}`, postData);
   }
 
   deleteToDo(id: number): Observable<any> {

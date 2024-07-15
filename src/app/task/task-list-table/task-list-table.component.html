@@ -37,7 +37,7 @@
       <button mat-fab (click)="deleteTask(element.id)">
         <mat-icon>delete</mat-icon>
       </button>
-      <button mat-fab>
+      <button mat-fab (click)="openTaskEditDialog(element.completed, element.id, element.title)">
         <mat-icon>edit</mat-icon>
       </button>
     </td>

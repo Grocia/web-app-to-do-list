@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { PlaceholderDataService } from '../placeholder-data.service';
-import { ToDoDtoResponse } from '../model/to-do-response.model';
+import { ToDo } from '../model/to-do.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { TaskEditDialogComponent } from '../task-edit-dialog/task-edit-dialog.component';
 
 
 @Component({
@@ -14,11 +16,14 @@ import { Router } from '@angular/router';
 })
 export class TaskListTableComponent implements OnInit{
   displayedColumns: string[] = ['completed', 'id', 'title', 'remove'];
-  toDoListDataSource = new MatTableDataSource<ToDoDtoResponse>;
+  toDoListDataSource = new MatTableDataSource<ToDo>;
   taskForm = new FormGroup({
     taskTitle: new FormControl('')
   });
-
+  readonly animal = signal('');
+  //readonly name = model('');
+  readonly dialog = inject(MatDialog);
+  
   constructor(
     private _placeholderDataService: PlaceholderDataService,
     private _authService: AuthService,
@@ -48,12 +53,6 @@ export class TaskListTableComponent implements OnInit{
     this.toDoListDataSource.data = this.toDoListDataSource.data.filter(task => task.id != id);
   }
 
-  updatTask(id: number, newTitle: string): void{
-    //fake update:
-    //con un find y sustituyendo
-
-  }
-
   createTask(): void{
     const taskTitle = this.taskForm.get('taskTitle')?.value;
     if(taskTitle){
@@ -78,5 +77,27 @@ export class TaskListTableComponent implements OnInit{
     this.toDoListDataSource.data = [];
     this.toDoListDataSource.data = aux;
   };
+
+  openTaskEditDialog(completed: boolean, id : number, title: string): void {
+    const dialogRef = this.dialog.open(TaskEditDialogComponent, {
+      data: {taskState: completed, taskId: id, taskTitle: title},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        //this.loadTasks(); //normally i would need to refresh the list
+        //fake update
+        this.toDoListDataSource.data = this.toDoListDataSource.data.filter(task => task.id != result.id);
+        this.toDoListDataSource.data.push({ 
+          userId: result.userId,
+          id: result.id,
+          title: result.title,
+          completed: result.completed
+        });
+        this.toDoListDataSource.data.sort((a, b) => a.id - b.id)
+        this.refreshTaskList();
+      }
+    });
+  }
 
 }

@@ -4,6 +4,7 @@ import { UserPlaceholderService } from '../user-placeholder.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/shared/service/auth.service';
+import { SnackbarService } from 'src/app/shared/service/snackbar.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent {
   constructor(
     private _userPlaceholderService : UserPlaceholderService,
     private _authService: AuthService,
-    private _snackBar: MatSnackBar,
+    private _snackbarService: SnackbarService,
     private _router: Router
   ){}
 
@@ -41,7 +42,7 @@ export class LoginComponent {
     if(this.emailInput){
       this._userPlaceholderService.getUserByEmail(this.emailInput).subscribe((response) => {
         if(response && response.length > 0){
-          this.openSnackBar('Login successful')
+          this.openSnackBar('Login successfully')
           this._authService.setUserData(response[0]);
           this._router.navigate(['task-list'])
         }
@@ -53,11 +54,7 @@ export class LoginComponent {
   }
 
   openSnackBar(snackBarBody : string): void{
-    this._snackBar.open(snackBarBody, 'Close', {
-      duration: 2000,
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-    });
+    this._snackbarService.openInformationSnackBar(snackBarBody);
   }
 
 }
