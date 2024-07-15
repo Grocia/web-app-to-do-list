@@ -17,6 +17,9 @@ import { user } from './user/user.module';
 import { task } from './task/task.module';
 import { TaskEditDialogComponent } from './task/task-edit-dialog/task-edit-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AboutComponent } from './about/about.component';
+import { about } from './about/about.module';
+import {MatListModule} from '@angular/material/list';
 
 
 @NgModule({
@@ -24,7 +27,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     AppComponent,
     task,
     user,
-    TaskEditDialogComponent
+    about,
+    TaskEditDialogComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +45,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatCardModule,
     MatSnackBarModule,
     MatButtonModule,
-    MatDialogModule 
+    MatDialogModule,
+    MatListModule
   ],
   providers: [
     provideAnimations()
